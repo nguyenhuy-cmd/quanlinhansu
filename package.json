@@ -1,0 +1,20 @@
+{
+  "name": "hrm-system",
+  "version": "1.0.0",
+  "description": "Hệ thống Quản lý Nhân sự - Vanilla JavaScript",
+  "main": "app.js",
+  "scripts": {
+    "start": "npx http-server -p 8000 -o",
+    "dev": "npx http-server -p 8000 -o"
+  },
+  "keywords": [
+    "hrm",
+    "javascript",
+    "vanilla-js",
+    "employee-management"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}

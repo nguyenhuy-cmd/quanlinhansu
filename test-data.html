@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Departments & Positions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #4CAF50;
+            color: white;
+            font-size: 14px;
+        }
+        button:hover { background: #45a049; }
+        .error { color: red; }
+        .success { color: green; }
+        pre {
+            background: #333;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Test Departments & Positions Data</h1>
+        
+        <div class="section">
+            <h2>1. Kiểm tra localStorage</h2>
+            <button onclick="checkLocalStorage()">Check Data</button>
+            <button onclick="clearAllData()">Clear All Data</button>
+            <button onclick="initDefaultData()">Init Default Data</button>
+            <div id="storage-result"></div>
+        </div>
+
+        <div class="section">
+            <h2>2. Test Dropdown Values</h2>
+            <label>Phòng ban:</label>
+            <select id="test-department">
+                <option value="">-- Loading... --</option>
+            </select>
+            <br><br>
+            <label>Vị trí:</label>
+            <select id="test-position">
+                <option value="">-- Loading... --</option>
+            </select>
+            <br><br>
+            <button onclick="checkSelectedValues()">Check Selected Values</button>
+            <div id="selection-result"></div>
+        </div>
+
+        <div class="section">
+            <h2>3. Console Logs</h2>
+            <div id="console-output"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import DepartmentModule from './departmentModule.js';
+        import PositionModule from './positionModule.js';
+
+        window.DepartmentModule = DepartmentModule;
+        window.PositionModule = PositionModule;
+
+        // Load dropdowns
+        function loadDropdowns() {
+            const depts = DepartmentModule.getAllDepartments();
+            const positions = PositionModule.getAllPositions();
+
+            const deptSelect = document.getElementById('test-department');
+            const posSelect = document.getElementById('test-position');
+
+            deptSelect.innerHTML = '<option value="">-- Chọn phòng ban --</option>' +
+                depts.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+
+            posSelect.innerHTML = '<option value="">-- Chọn vị trí --</option>' +
+                positions.map(p => `<option value="${p.id}">${p.title}</option>`).join('');
+        }
+
+        window.checkLocalStorage = function() {
+            const result = document.getElementById('storage-result');
+            
+            const depts = DepartmentModule.getAllDepartments();
+            const positions = PositionModule.getAllPositions();
+
+            let html = '<h3>Kết quả:</h3>';
+            
+            if (depts.length === 0) {
+                html += '<p class="error">❌ Không có departments trong localStorage!</p>';
+            } else {
+                html += `<p class="success">✅ Có ${depts.length} departments</p>`;
+                html += '<pre>' + JSON.stringify(depts, null, 2) + '</pre>';
+            }
+
+            if (positions.length === 0) {
+                html += '<p class="error">❌ Không có positions trong localStorage!</p>';
+            } else {
+                html += `<p class="success">✅ Có ${positions.length} positions</p>`;
+                html += '<pre>' + JSON.stringify(positions, null, 2) + '</pre>';
+            }
+
+            result.innerHTML = html;
+            loadDropdowns();
+        };
+
+        window.clearAllData = function() {
+            if (confirm('Xóa tất cả dữ liệu?')) {
+                localStorage.removeItem('hrm_departments');
+                localStorage.removeItem('hrm_positions');
+                alert('✅ Đã xóa!');
+                checkLocalStorage();
+            }
+        };
+
+        window.initDefaultData = function() {
+            // Force reload modules to trigger init
+            location.reload();
+        };
+
+        window.checkSelectedValues = function() {
+            const result = document.getElementById('selection-result');
+            const deptSelect = document.getElementById('test-department');
+            const posSelect = document.getElementById('test-position');
+
+            const deptValue = deptSelect.value;
+            const posValue = posSelect.value;
+
+            const deptId = parseInt(deptValue);
+            const posId = parseInt(posValue);
+
+            let html = '<h3>Giá trị đã chọn:</h3>';
+            html += `<p>Department value: "${deptValue}" → parseInt: ${deptId} → isNaN: ${isNaN(deptId)}</p>`;
+            html += `<p>Position value: "${posValue}" → parseInt: ${posId} → isNaN: ${isNaN(posId)}</p>`;
+
+            if (!deptId || isNaN(deptId)) {
+                html += '<p class="error">❌ Validation FAIL: Department invalid!</p>';
+            } else {
+                html += '<p class="success">✅ Validation PASS: Department OK!</p>';
+            }
+
+            if (!posId || isNaN(posId)) {
+                html += '<p class="error">❌ Validation FAIL: Position invalid!</p>';
+            } else {
+                html += '<p class="success">✅ Validation PASS: Position OK!</p>';
+            }
+
+            result.innerHTML = html;
+        };
+
+        // Auto-run on load
+        setTimeout(() => {
+            checkLocalStorage();
+        }, 500);
+    </script>
+</body>
+</html>

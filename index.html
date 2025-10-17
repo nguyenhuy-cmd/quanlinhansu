@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống Quản lý Nhân sự</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Màn hình đăng nhập -->
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <h1>Đăng nhập HRM</h1>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Tên đăng nhập:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                <button type="button" id="show-register" class="btn btn-secondary">Đăng ký</button>
+            </form>
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="#" id="show-forgot-password" style="color: white; text-decoration: none; font-size: 14px;">Quên mật khẩu?</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Screen -->
+    <div id="forgot-password-screen" class="screen">
+        <div class="login-container">
+            <h1>Quên mật khẩu</h1>
+            <p style="margin-bottom: 20px; color: #666;">Nhập tên đăng nhập để đặt lại mật khẩu</p>
+            <form id="forgot-password-form">
+                <div class="form-group">
+                    <label for="forgot-username">Tên đăng nhập:</label>
+                    <input type="text" id="forgot-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Mật khẩu mới:</label>
+                    <input type="password" id="new-password" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="confirm-new-password">Xác nhận mật khẩu mới:</label>
+                    <input type="password" id="confirm-new-password" required minlength="6">
+                </div>
+                <button type="submit" class="btn btn-primary">Đặt lại mật khẩu</button>
+                <button type="button" id="back-to-login" class="btn btn-secondary">Quay lại đăng nhập</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Screen -->
+    <div id="register-screen" class="screen">
+        <div class="login-container">
+            <h1>Đăng ký tài khoản</h1>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="reg-username">Tên đăng nhập:</label>
+                    <input type="text" id="reg-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Mật khẩu:</label>
+                    <input type="password" id="reg-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm">Xác nhận mật khẩu:</label>
+                    <input type="password" id="reg-confirm" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
+                <button type="button" id="show-login" class="btn btn-secondary">Quay lại đăng nhập</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Màn hình bảng điều khiển -->
+    <div id="dashboard-screen" class="screen">
+        <div class="dashboard-container">
+            <!-- Điều hướng thanh bên -->
+            <aside class="sidebar">
+                <div class="logo">
+                    <h2>HRM System</h2>
+                </div>
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="#" data-module="dashboard" class="nav-link active">Dashboard</a></li>
+                        <li><a href="#" data-module="add-employee" class="nav-link">Thêm nhân viên</a></li>
+                        <li><a href="#" data-module="edit-employee" class="nav-link">Sửa nhân viên</a></li>
+                        <li><a href="#" data-module="delete-employee" class="nav-link">Xóa nhân viên</a></li>
+                        <li><a href="#" data-module="search-employee" class="nav-link">Tìm kiếm nhân viên</a></li>
+                        <li><a href="#" data-module="departments" class="nav-link">Phòng ban</a></li>
+                        <li><a href="#" data-module="positions" class="nav-link">Vị trí</a></li>
+                        <li><a href="#" data-module="salary" class="nav-link">Lương</a></li>
+                        <li><a href="#" data-module="attendance" class="nav-link">Chấm công</a></li>
+                        <li><a href="#" data-module="leave" class="nav-link">Nghỉ phép</a></li>
+                        <li><a href="#" data-module="performance" class="nav-link">Đánh giá</a></li>
+                    </ul>
+                </nav>
+                <button id="logout-btn" class="btn btn-danger">Đăng xuất</button>
+            </aside>
+
+            <!-- Nội dung chính -->
+            <main class="main-content">
+                <header class="header">
+                    <h1 id="page-title">Dashboard</h1>
+                    <div class="user-info">
+                        <span id="current-user">Admin</span>
+                    </div>
+                </header>
+                
+                <div id="content-area" class="content">
+                    <!-- Nội dung động sẽ được tải ở đây -->
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <h2>Chào mừng đến với Hệ thống Quản lý Nhân sự</h2>
+                        <p>Vui lòng chọn chức năng từ menu bên trái để bắt đầu.</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

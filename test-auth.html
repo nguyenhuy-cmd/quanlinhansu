@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test HRM - Auth</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #login-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        #register-screen {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 400px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Màn hình đăng nhập -->
+    <div id="login-screen" class="screen active">
+        <div class="container">
+            <h1>Đăng nhập</h1>
+            <p>Username: admin, Password: admin123</p>
+            <button id="show-register" class="btn-secondary">Chuyển sang Đăng ký</button>
+        </div>
+    </div>
+
+    <!-- Màn hình đăng ký -->
+    <div id="register-screen" class="screen">
+        <div class="container">
+            <h1>Đăng ký</h1>
+            <p>Tạo tài khoản mới</p>
+            <button id="show-login" class="btn-secondary">Quay lại Đăng nhập</button>
+        </div>
+    </div>
+
+    <script>
+        // Kiểm tra chuyển đổi giữa các màn hình
+        const loginScreen = document.getElementById('login-screen');
+        const registerScreen = document.getElementById('register-screen');
+        const showRegisterBtn = document.getElementById('show-register');
+        const showLoginBtn = document.getElementById('show-login');
+
+        showRegisterBtn.addEventListener('click', () => {
+            console.log('Clicked: Show Register');
+            loginScreen.classList.remove('active');
+            registerScreen.classList.add('active');
+        });
+
+        showLoginBtn.addEventListener('click', () => {
+            console.log('Clicked: Show Login');
+            registerScreen.classList.remove('active');
+            loginScreen.classList.add('active');
+        });
+
+        console.log('Test page loaded successfully!');
+    </script>
+</body>
+</html>

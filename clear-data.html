@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Clear All Data - HRM System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .info {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            color: #721c24;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            color: #155724;
+        }
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        ul {
+            text-align: left;
+            margin: 10px 0;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗑️ Xóa Toàn Bộ Dữ Liệu HRM</h1>
+        
+        <div class="warning">
+            <h3>⚠️ CẢNH BÁO</h3>
+            <p>Hành động này sẽ xóa:</p>
+            <ul>
+                <li>❌ Tất cả nhân viên</li>
+                <li>❌ Tất cả phòng ban</li>
+                <li>❌ Tất cả vị trí</li>
+                <li>❌ Session đăng nhập</li>
+                <li>❌ Dữ liệu users</li>
+            </ul>
+            <p><strong>Không thể hoàn tác!</strong></p>
+        </div>
+
+        <div class="info">
+            <h3>📊 Dữ liệu hiện tại:</h3>
+            <div id="current-data">Đang kiểm tra...</div>
+        </div>
+
+        <button class="btn-danger" onclick="clearAllData()">
+            🗑️ XÓA TẤT CẢ DỮ LIỆU
+        </button>
+        
+        <button class="btn-success" onclick="clearAndReload()">
+            🔄 XÓA & KHỞI TẠO LẠI
+        </button>
+
+        <button class="btn-secondary" onclick="goBack()">
+            ← Quay lại
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Kiểm tra dữ liệu hiện tại
+        function checkCurrentData() {
+            const dataDiv = document.getElementById('current-data');
+            let html = '<ul style="list-style: none; padding: 0;">';
+            
+            const employees = localStorage.getItem('hrm_employees');
+            const departments = localStorage.getItem('hrm_departments');
+            const positions = localStorage.getItem('hrm_positions');
+            const users = localStorage.getItem('hrm_users');
+            const session = sessionStorage.getItem('hrm_session');
+
+            html += `<li>👥 Nhân viên: <strong>${employees ? JSON.parse(employees).length : 0}</strong></li>`;
+            html += `<li>🏢 Phòng ban: <strong>${departments ? JSON.parse(departments).length : 0}</strong></li>`;
+            html += `<li>💼 Vị trí: <strong>${positions ? JSON.parse(positions).length : 0}</strong></li>`;
+            html += `<li>👤 Users: <strong>${users ? JSON.parse(users).length : 0}</strong></li>`;
+            html += `<li>🔐 Session: <strong>${session ? 'Có' : 'Không'}</strong></li>`;
+            html += '</ul>';
+
+            dataDiv.innerHTML = html;
+        }
+
+        // Xóa tất cả dữ liệu
+        function clearAllData() {
+            if (!confirm('⚠️ BẠN CHẮC CHẮN MUỐN XÓA TẤT CẢ DỮ LIỆU?\n\nHành động này không thể hoàn tác!')) {
+                return;
+            }
+
+            if (!confirm('⚠️ XÁC NHẬN LẦN 2: Thực sự xóa tất cả?')) {
+                return;
+            }
+
+            try {
+                // Xóa localStorage
+                localStorage.removeItem('hrm_employees');
+                localStorage.removeItem('hrm_departments');
+                localStorage.removeItem('hrm_positions');
+                localStorage.removeItem('hrm_users');
+                
+                // Xóa sessionStorage
+                sessionStorage.removeItem('hrm_session');
+
+                document.getElementById('result').innerHTML = `
+                    <div class="success">
+                        <h3>✅ Đã xóa thành công!</h3>
+                        <p>Tất cả dữ liệu đã được xóa.</p>
+                        <p>Vui lòng <strong>refresh trang chính</strong> để hệ thống tự động khởi tạo dữ liệu mặc định.</p>
+                    </div>
+                `;
+
+                checkCurrentData();
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <div class="warning">
+                        <h3>❌ Lỗi!</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Xóa và reload
+        function clearAndReload() {
+            if (!confirm('⚠️ Xóa tất cả dữ liệu và tải lại trang?')) {
+                return;
+            }
+
+            // Xóa localStorage
+            localStorage.removeItem('hrm_employees');
+            localStorage.removeItem('hrm_departments');
+            localStorage.removeItem('hrm_positions');
+            localStorage.removeItem('hrm_users');
+            
+            // Xóa sessionStorage
+            sessionStorage.removeItem('hrm_session');
+
+            // Reload về trang chính
+            alert('✅ Đã xóa dữ liệu! Đang tải lại...');
+            window.location.href = '/index.html';
+        }
+
+        // Quay lại
+        function goBack() {
+            window.location.href = '/index.html';
+        }
+
+        // Auto-check on load
+        checkCurrentData();
+    </script>
+</body>
+</html>
