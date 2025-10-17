@@ -108,8 +108,10 @@ const LeaveModule = (() => {
 
     // Duyệt nghỉ phép
     const approveLeave = async (leaveId, approve = true) => {
-    const leaves = getAllLeaves();
-    const leave = leaves.find(l => l.id === leaveId);
+        const leaves = getAllLeaves();
+        // Convert leaveId to number để so sánh chính xác
+        const id = parseInt(leaveId);
+        const leave = leaves.find(l => parseInt(l.id) === id);
 
         if (!leave) {
             throw new Error('Không tìm thấy yêu cầu nghỉ phép');
