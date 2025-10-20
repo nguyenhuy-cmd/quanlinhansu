@@ -189,12 +189,12 @@ const DeleteEmployeeModule = (() => {
             }
         });
 
-        // Cancel
+        
         cancelBtn.addEventListener('click', () => {
             selectedEmployee = null;
             document.getElementById('employee-detail').style.display = 'none';
             searchIdInput.value = '';
-            searchNameInput.value = '';
+        searchNameInput.value = '';
         });
     };
 
@@ -202,3 +202,4 @@ const DeleteEmployeeModule = (() => {
 })();
 
 export default DeleteEmployeeModule;
+
